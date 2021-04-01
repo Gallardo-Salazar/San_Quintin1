@@ -1,0 +1,125 @@
+<!doctype html>
+<title>San Quintín</title>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 98%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+	</a><h2 align=center>Cañada San Quintín, Durango México</h1>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[23.905009882073973,-104.20005576909054],[23.910117131510273,-104.19037385049185]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<h1 align=center><br><a href="https://gallardo-salazar.github.io/PC_SQ/">3D Model</a></h1><a href="https://www.ujed.mx/"><div align="center"><img src="fotos/ujed.png" width="100">');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        map.createPane('pane_Modelodigitaldeterreno_1');
+        map.getPane('pane_Modelodigitaldeterreno_1').style.zIndex = 401;
+        var img_Modelodigitaldeterreno_1 = 'data/Modelodigitaldeterreno_1.png';
+        var img_bounds_Modelodigitaldeterreno_1 = [[23.904536050150636,-104.1981986724759],[23.909381459819798,-104.1927105617567]];
+        var layer_Modelodigitaldeterreno_1 = new L.imageOverlay(img_Modelodigitaldeterreno_1,
+                                              img_bounds_Modelodigitaldeterreno_1,
+                                              {pane: 'pane_Modelodigitaldeterreno_1'});
+        bounds_group.addLayer(layer_Modelodigitaldeterreno_1);
+        map.addLayer(layer_Modelodigitaldeterreno_1);
+        map.createPane('pane_Modelodigitaldesuprficie_2');
+        map.getPane('pane_Modelodigitaldesuprficie_2').style.zIndex = 402;
+        var img_Modelodigitaldesuprficie_2 = 'data/Modelodigitaldesuprficie_2.png';
+        var img_bounds_Modelodigitaldesuprficie_2 = [[23.904536638784478,-104.1981979062852],[23.90938131835742,-104.19271121825501]];
+        var layer_Modelodigitaldesuprficie_2 = new L.imageOverlay(img_Modelodigitaldesuprficie_2,
+                                              img_bounds_Modelodigitaldesuprficie_2,
+                                              {pane: 'pane_Modelodigitaldesuprficie_2'});
+        bounds_group.addLayer(layer_Modelodigitaldesuprficie_2);
+        map.addLayer(layer_Modelodigitaldesuprficie_2);
+        map.createPane('pane_Ortomosaico_3');
+        map.getPane('pane_Ortomosaico_3').style.zIndex = 403;
+        var img_Ortomosaico_3 = 'data/Ortomosaico_3.png';
+        var img_bounds_Ortomosaico_3 = [[23.90453657178199,-104.19819854592066],[23.90938106947773,-104.19271141516221]];
+        var layer_Ortomosaico_3 = new L.imageOverlay(img_Ortomosaico_3,
+                                              img_bounds_Ortomosaico_3,
+                                              {pane: 'pane_Ortomosaico_3'});
+        bounds_group.addLayer(layer_Ortomosaico_3);
+        map.addLayer(layer_Ortomosaico_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{"Ortomosaico": layer_Ortomosaico_3,"Modelo digital de superficie": layer_Modelodigitaldesuprficie_2,"Modelo digital de terreno": layer_Modelodigitaldeterreno_1,"Google Satellite": layer_GoogleSatellite_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        </script>
+    </body>
+</html>
